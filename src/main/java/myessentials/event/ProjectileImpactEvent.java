@@ -1,6 +1,5 @@
 package myessentials.event;
 
-import cpw.mods.fml.common.eventhandler.Cancelable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -8,28 +7,29 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent;
 
+import cpw.mods.fml.common.eventhandler.Cancelable;
+
 /**
- * Fired when an EntityThrowable or EntityFireball is about to call onImpact().
- * If the event is canceled onImpact() is not called.
+ * Fired when an EntityThrowable or EntityFireball is about to call onImpact(). If the event is canceled onImpact() is
+ * not called.
  */
 @Cancelable
-public class ProjectileImpactEvent extends EntityEvent 
-{
+public class ProjectileImpactEvent extends EntityEvent {
+
     /**
      * The entity that fires the projectile
      */
     public final EntityLivingBase firingEntity;
-    
+
     /**
      * The MovingObjectPosition that is generated from this impact
      */
     public final MovingObjectPosition movingObjectPosition;
-    
+
     /**
      * Creates a new event for an impacting EntityThrowable
      */
-    public ProjectileImpactEvent(EntityThrowable throwable, MovingObjectPosition mop)
-    {
+    public ProjectileImpactEvent(EntityThrowable throwable, MovingObjectPosition mop) {
         super(throwable);
         this.firingEntity = throwable.getThrower();
         this.movingObjectPosition = mop;
@@ -38,8 +38,7 @@ public class ProjectileImpactEvent extends EntityEvent
     /**
      * Creates a new event for an impacting EntityFireball
      */
-    public ProjectileImpactEvent(EntityFireball fireball, MovingObjectPosition mop)
-    {
+    public ProjectileImpactEvent(EntityFireball fireball, MovingObjectPosition mop) {
         super(fireball);
         this.firingEntity = fireball.shootingEntity;
         this.movingObjectPosition = mop;

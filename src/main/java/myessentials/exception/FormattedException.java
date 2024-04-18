@@ -1,7 +1,8 @@
 package myessentials.exception;
 
-import myessentials.localization.api.LocalManager;
 import net.minecraft.util.IChatComponent;
+
+import myessentials.localization.api.LocalManager;
 
 public abstract class FormattedException extends RuntimeException {
 

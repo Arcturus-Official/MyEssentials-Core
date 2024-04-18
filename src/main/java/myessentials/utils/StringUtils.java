@@ -5,8 +5,7 @@ package myessentials.utils;
  */
 public class StringUtils {
 
-    private StringUtils() {
-    }
+    private StringUtils() {}
 
     /**
      * Returns whether or not the String can be parsed as an Integer

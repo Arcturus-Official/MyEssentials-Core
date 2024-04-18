@@ -1,18 +1,21 @@
 package myessentials.economy.core.vault;
 
-import myessentials.economy.api.IEconManager;
+import java.util.Map;
+import java.util.UUID;
+
 import net.milkbowl.vault.economy.Economy;
 import net.minecraft.entity.player.EntityPlayer;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.Map;
-import java.util.UUID;
+import myessentials.economy.api.IEconManager;
 
 /**
  * Economy implementation for the Vault API
  */
 public class VaultEconomy implements IEconManager {
+
     public static Economy econ;
 
     private OfflinePlayer player;
@@ -21,8 +24,7 @@ public class VaultEconomy implements IEconManager {
         player = Bukkit.getServer().getOfflinePlayer(uuid);
     }
 
-    public VaultEconomy() {
-    }
+    public VaultEconomy() {}
 
     @Override
     public void setPlayer(UUID uuid) {
@@ -60,8 +62,7 @@ public class VaultEconomy implements IEconManager {
     }
 
     @Override
-    public void save() {
-    }
+    public void save() {}
 
     @Override
     public Map<String, Integer> getItemTables() {

@@ -1,14 +1,16 @@
 package myessentials.entities.api;
 
-import myessentials.MyEssentialsCore;
-import myessentials.chat.api.IChatFormat;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IChatComponent;
+
+import myessentials.MyEssentialsCore;
+import myessentials.chat.api.IChatFormat;
 
 /**
  * Helper class for storing position of a chunk
  */
 public class ChunkPos implements IChatFormat {
+
     private final int dim;
     private final int x;
     private final int z;

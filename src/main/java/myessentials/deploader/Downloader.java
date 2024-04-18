@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.nio.ByteBuffer;
 
 public class Downloader {
+
     private final ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 << 23);
     private File destinationFolder;
 
@@ -34,8 +35,7 @@ public class Downloader {
         for (File f : files) {
             vFile = new VersionedFile(f.getName(), dep.getFile().getPattern());
 
-            if (!vFile.matches() || !vFile.getName().equals(dep.getName()))
-                continue;
+            if (!vFile.matches() || !vFile.getName().equals(dep.getName())) continue;
 
             int cmp = vFile.getVersion().compareTo(dep.getVersion());
             if (cmp < 0) {
@@ -44,7 +44,9 @@ public class Downloader {
                 return false;
             }
             if (cmp > 0) {
-                System.out.println("[MyEssentials-Core] Warning: version of " + dep.getName() + ", " + vFile.getVersion() + " is newer than request " + dep.getVersion());
+                System.out.println(
+                        "[MyEssentials-Core] Warning: version of " + dep
+                                .getName() + ", " + vFile.getVersion() + " is newer than request " + dep.getVersion());
             }
 
             return true;
@@ -56,7 +58,9 @@ public class Downloader {
     private void deleteDep(File depFile) {
         if (!depFile.delete()) {
             depFile.deleteOnExit();
-            System.out.println("[MyEssentials-Core] Was not able to delete file " + depFile.getPath() + ". Will try to delete on exit.");
+            System.out.println(
+                    "[MyEssentials-Core] Was not able to delete file " + depFile.getPath()
+                            + ". Will try to delete on exit.");
             System.exit(1);
         }
     }
@@ -84,8 +88,8 @@ public class Downloader {
     }
 
     private void download(InputStream is, int sizeGuess, File target) throws Exception {
-        if (sizeGuess > downloadBuffer.capacity())
-            throw new Exception(String.format("The file %s is too large to be downloaded - the download is invalid", target.getName()));
+        if (sizeGuess > downloadBuffer.capacity()) throw new Exception(
+                String.format("The file %s is too large to be downloaded - the download is invalid", target.getName()));
 
         downloadBuffer.clear();
 
@@ -93,7 +97,7 @@ public class Downloader {
 
         try {
             byte[] smallBuffer = new byte[1024];
-            while((bytesRead = is.read(smallBuffer)) >= 0) {
+            while ((bytesRead = is.read(smallBuffer)) >= 0) {
                 downloadBuffer.put(smallBuffer, 0, bytesRead);
                 fullLength += bytesRead;
             }
@@ -105,8 +109,7 @@ public class Downloader {
         }
 
         try {
-            if (!target.exists())
-                target.createNewFile();
+            if (!target.exists()) target.createNewFile();
 
             downloadBuffer.position(0);
             FileOutputStream fos = new FileOutputStream(target);

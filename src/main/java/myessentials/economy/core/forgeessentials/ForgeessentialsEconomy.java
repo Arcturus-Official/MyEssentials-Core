@@ -1,15 +1,18 @@
 package myessentials.economy.core.forgeessentials;
 
-import com.forgeessentials.api.APIRegistry;
-import com.forgeessentials.api.UserIdent;
-import com.forgeessentials.api.economy.Wallet;
-import myessentials.economy.api.IEconManager;
-import net.minecraft.entity.player.EntityPlayer;
-
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.forgeessentials.api.APIRegistry;
+import com.forgeessentials.api.UserIdent;
+import com.forgeessentials.api.economy.Wallet;
+
+import myessentials.economy.api.IEconManager;
+
 public class ForgeessentialsEconomy implements IEconManager {
+
     private Wallet wallet;
 
     public ForgeessentialsEconomy(UUID uuid) {

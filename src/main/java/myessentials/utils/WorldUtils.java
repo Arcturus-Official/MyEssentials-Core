@@ -1,21 +1,21 @@
 package myessentials.utils;
 
-import myessentials.entities.api.ChunkPos;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import myessentials.entities.api.ChunkPos;
 
 /**
  * All utilities that are exclusively for in world objects go here.
  */
 public class WorldUtils {
 
-    private WorldUtils() {
-    }
+    private WorldUtils() {}
 
     /**
      * Transforms a box made out of actual coordinates to a list of all the chunks that this box is in
@@ -52,8 +52,7 @@ public class WorldUtils {
     public static int getMaxHeightWithSolid(int dim, int x, int z) {
         World world = MinecraftServer.getServer().worldServerForDimension(dim);
         int y = world.getActualHeight();
-        while(!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 0)
-            y--;
+        while (!world.getBlock(x, y, z).getMaterial().isOpaque() && y > 0) y--;
         return y;
     }
 }

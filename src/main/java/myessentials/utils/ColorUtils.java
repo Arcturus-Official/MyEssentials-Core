@@ -1,10 +1,10 @@
 package myessentials.utils;
 
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 
 /**
  * Colors for characters or types of things commonly used.

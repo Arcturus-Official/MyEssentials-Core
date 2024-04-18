@@ -1,23 +1,24 @@
 package myessentials.datasource.api.bridge;
 
-import myessentials.Constants;
-import myessentials.MyEssentialsCore;
-import myessentials.config.api.ConfigProperty;
-import myessentials.config.api.ConfigTemplate;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.sqlite.JDBC;
-
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.sqlite.JDBC;
+
+import myessentials.Constants;
+import myessentials.MyEssentialsCore;
+import myessentials.config.api.ConfigProperty;
+import myessentials.config.api.ConfigTemplate;
+
 public class BridgeSQLite extends BridgeSQL {
 
     public ConfigProperty<String> dbPath = new ConfigProperty<String>(
-            "path", "datasource",
+            "path",
+            "datasource",
             "The path to the database file.",
             "");
-
 
     public BridgeSQLite(ConfigTemplate config) {
         dbPath.set(Constants.DATABASE_FOLDER + config.getModID() + "/data.db");

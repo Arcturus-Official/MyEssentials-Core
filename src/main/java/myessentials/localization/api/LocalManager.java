@@ -1,11 +1,11 @@
 package myessentials.localization.api;
 
-import myessentials.chat.api.ChatComponentFormatted;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.IChatComponent;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.command.ICommandSender;
+
+import myessentials.chat.api.ChatComponentFormatted;
 
 /**
  * Centralized localization access
@@ -15,8 +15,8 @@ public class LocalManager {
     private static Map<String, Local> localizations = new HashMap<String, Local>();
 
     /**
-     * Registers a localization file to be used globally
-     * The key string should be the first part of any localization key that is found in the file
+     * Registers a localization file to be used globally The key string should be the first part of any localization key
+     * that is found in the file
      */
     public static void register(Local local, String key) {
         localizations.put(key, local);

@@ -1,6 +1,5 @@
 package myessentials.chat.api;
 
-
 import net.minecraft.util.IChatComponent;
 
 /**

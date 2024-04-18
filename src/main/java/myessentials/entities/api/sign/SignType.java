@@ -7,16 +7,19 @@ import net.minecraft.tileentity.TileEntitySign;
  * A type of a wrapped sign block on the server side.
  */
 public abstract class SignType {
+
     /**
      * The unique ID for this type.
+     * 
      * @return The ID following the syntax: "modId:signType"
      */
     public abstract String getTypeID();
 
     /**
      * Loads a sign data of this type.
+     * 
      * @param tileEntity The tile entity that is being loaded
-     * @param signData The data stored on the sign
+     * @param signData   The data stored on the sign
      * @return The loaded sign
      */
     public abstract Sign loadData(TileEntitySign tileEntity, NBTBase signData);

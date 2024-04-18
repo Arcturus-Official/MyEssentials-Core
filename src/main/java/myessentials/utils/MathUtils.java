@@ -5,8 +5,7 @@ package myessentials.utils;
  */
 public class MathUtils {
 
-    private MathUtils() {
-    }
+    private MathUtils() {}
 
     /**
      * Returns the sum from n to m (Ex: n = 1, m = 3 => 1 + 2 + 3 = 6)

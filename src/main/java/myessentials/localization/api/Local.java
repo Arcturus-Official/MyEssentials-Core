@@ -1,19 +1,26 @@
 package myessentials.localization.api;
 
-import myessentials.MyEssentialsCore;
-import myessentials.chat.api.ChatComponentFormatted;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import myessentials.MyEssentialsCore;
+import myessentials.chat.api.ChatComponentFormatted;
 
 /**
  * Loads and handles Localization files
  */
 public class Local {
+
     public static final String defaultLocalization = "en_US";
 
     private Map<String, String> localizations = new HashMap<String, String>();
@@ -34,7 +41,7 @@ public class Local {
     private Reader getReader() throws FileNotFoundException {
         InputStream is = null;
 
-        if(filePath != null) {
+        if (filePath != null) {
             File file = new File(filePath + lang + ".lang");
             if (file.exists() && !file.isDirectory()) {
                 is = new FileInputStream(file);
@@ -50,6 +57,7 @@ public class Local {
 
         return new InputStreamReader(is);
     }
+
     /**
      * Do the actual loading of the Localization file
      */
@@ -80,7 +88,8 @@ public class Local {
 
     public ChatComponentFormatted getLocalization(String key, Object... args) {
         String localized = localizations.get(key);
-        return localized == null ? new ChatComponentFormatted("{|" + key + "}") : new ChatComponentFormatted(localized, args);
+        return localized == null ? new ChatComponentFormatted("{|" + key + "}")
+                : new ChatComponentFormatted(localized, args);
     }
 
     public boolean hasLocalization(String key) {

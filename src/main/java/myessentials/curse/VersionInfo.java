@@ -1,6 +1,7 @@
 package myessentials.curse;
 
 public class VersionInfo {
+
     private int id;
     private String url;
     private String name;

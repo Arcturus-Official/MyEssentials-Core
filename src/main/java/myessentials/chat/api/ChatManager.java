@@ -1,10 +1,11 @@
 package myessentials.chat.api;
 
-import myessentials.localization.api.LocalManager;
+import java.util.List;
+
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.IChatComponent;
 
-import java.util.List;
+import myessentials.localization.api.LocalManager;
 
 public class ChatManager {
 
@@ -16,8 +17,8 @@ public class ChatManager {
     }
 
     /**
-     * Global method for sending messages
-     * If the message sent is a ChatComponentList then only its siblings are sent, omitting the root component
+     * Global method for sending messages If the message sent is a ChatComponentList then only its siblings are sent,
+     * omitting the root component
      */
     @SuppressWarnings("unchecked")
     public static void send(ICommandSender sender, IChatComponent message) {
@@ -30,7 +31,7 @@ public class ChatManager {
         }
 
         if (message instanceof ChatComponentList) {
-            for (IChatComponent sibling : (List<IChatComponent>)message.getSiblings()) {
+            for (IChatComponent sibling : (List<IChatComponent>) message.getSiblings()) {
                 if (sibling == null) {
                     continue;
                 }

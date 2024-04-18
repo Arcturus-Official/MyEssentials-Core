@@ -3,8 +3,8 @@ package myessentials.thread;
 import java.lang.reflect.Method;
 
 /**
- * A simple thread that is delayed by an amount of seconds which calls a given method.
- * Only use on methods that are thread-safe!
+ * A simple thread that is delayed by an amount of seconds which calls a given method. Only use on methods that are
+ * thread-safe!
  */
 public class DelayedThread extends Thread {
 

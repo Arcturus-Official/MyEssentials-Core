@@ -1,17 +1,19 @@
 package myessentials.event;
 
-import cpw.mods.fml.common.eventhandler.Cancelable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 
+import cpw.mods.fml.common.eventhandler.Cancelable;
+
 /**
  * Fired when an entity tramples a farmland
  */
 @Cancelable
 public class BlockTrampleEvent extends BlockEvent {
+
     /**
      * The entity that trampled the farm land
      */
@@ -24,6 +26,7 @@ public class BlockTrampleEvent extends BlockEvent {
 
     @SuppressWarnings("unused")
     public static boolean fireEvent(Entity entity, BlockFarmland block, int x, int y, int z) {
-        return MinecraftForge.EVENT_BUS.post(new BlockTrampleEvent(entity, x, y, z, block, entity.worldObj.getBlockMetadata(x, y, z)));
+        return MinecraftForge.EVENT_BUS
+                .post(new BlockTrampleEvent(entity, x, y, z, block, entity.worldObj.getBlockMetadata(x, y, z)));
     }
 }

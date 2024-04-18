@@ -8,8 +8,7 @@ public abstract class BridgeSQL extends Bridge {
     public String prefix = "";
     public String[] userProperties = {};
 
-    public BridgeSQL() {
-    }
+    public BridgeSQL() {}
 
     protected Properties properties = new Properties();
     protected String dsn = "";

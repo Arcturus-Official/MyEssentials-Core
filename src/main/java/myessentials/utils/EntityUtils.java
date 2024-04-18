@@ -1,6 +1,8 @@
 package myessentials.utils;
 
-import myessentials.utils.ClassUtils;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.INpc;
@@ -15,10 +17,8 @@ import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 public class EntityUtils {
+
     private static ConcurrentMap<Class<?>, String> typeCache = new ConcurrentHashMap<Class<?>, String>();
 
     public static String getEntityPermission(Entity e) {
@@ -46,35 +46,35 @@ public class EntityUtils {
 
         type = getEntityTypeNonCache(e);
         typeCache.put(e.getClass(), type);
-        
+
         return type;
     }
-    
+
     private static String getEntityTypeNonCache(Entity e) {
-    	if (e instanceof EntityGolem) {
+        if (e instanceof EntityGolem) {
             return "Golem";
         } else if (e instanceof IBossDisplayData) {
-        	return "Boss";
+            return "Boss";
         } else if (e instanceof IAnimals) {
-        	return "Animal";
+            return "Animal";
         } else if (e instanceof IMob) {
-        	return "Monster";
+            return "Monster";
         } else if (e instanceof IProjectile) {
-        	return "Projectile";
+            return "Projectile";
         } else if (e instanceof INpc) {
-        	return "NPC";
+            return "NPC";
         } else if (e instanceof EntityItem) {
-        	return "Item";
+            return "Item";
         } else if (e instanceof EntityMob) {
-        	return "Monster";
+            return "Monster";
         } else if (e instanceof EntityPlayer) {
-        	return "Player";
+            return "Player";
         } else if (e instanceof EntityFireball) {
-        	return "Projectile";
+            return "Projectile";
         } else if (e instanceof EntityTNTPrimed) {
-        	return "TNT";
+            return "TNT";
         } else {
-        	return "Unknown"; // e.getClass().getName();
+            return "Unknown"; // e.getClass().getName();
         }
     }
 }

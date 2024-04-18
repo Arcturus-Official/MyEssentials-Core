@@ -1,40 +1,36 @@
 package myessentials.chat.api;
 
-import myessentials.exception.FormatException;
-import myessentials.utils.ColorUtils;
-import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import net.minecraft.event.HoverEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+
+import org.apache.commons.lang3.StringUtils;
+
+import myessentials.exception.FormatException;
+import myessentials.utils.ColorUtils;
+
 /**
  * An IChatComponent that converts a format to a set of IChatComponents
  *
- * Each of the parenthesis pairs represent an IChatComponent with its
- * own ChatStyle (color, bold, underlined, etc.)
+ * Each of the parenthesis pairs represent an IChatComponent with its own ChatStyle (color, bold, underlined, etc.)
  *
- * Example: {2|Entity number }{%s}{2| is the }{7l| %s}{aN|Good bye!}
- * This format will create the following IChatComponents:
- *  - "Entity number " ; with DARK_GREEN color
- *  - %s               ; one of the parameters sent by the caller (as IChatComponent or
- *                       IChatFormat, since it's missing the "|" style delimiter character
- *  - " is the "       ; with DARK_GREEN color
- *  - %s               ; one of the parameters sent by the caller (as String since it HAS "|" style delimiter character)
- *  - "Good bye!"      ; with GREEN color and on another line. The modifier "N"
- *                     ; represents a new line BEFORE the component it's in
+ * Example: {2|Entity number }{%s}{2| is the }{7l| %s}{aN|Good bye!} This format will create the following
+ * IChatComponents: - "Entity number " ; with DARK_GREEN color - %s ; one of the parameters sent by the caller (as
+ * IChatComponent or IChatFormat, since it's missing the "|" style delimiter character - " is the " ; with DARK_GREEN
+ * color - %s ; one of the parameters sent by the caller (as String since it HAS "|" style delimiter character) - "Good
+ * bye!" ; with GREEN color and on another line. The modifier "N" ; represents a new line BEFORE the component it's in
  *
- *  This ChatComponentFormatted will have the following structure:
- *      - sibling1     ; will be a list of all the elements before the component with
- *                     ; the "N" modifier in this case the first 3 components
- *      - sibling2     ; will be a list of the last component until the end
+ * This ChatComponentFormatted will have the following structure: - sibling1 ; will be a list of all the elements before
+ * the component with ; the "N" modifier in this case the first 3 components - sibling2 ; will be a list of the last
+ * component until the end
  */
 
 public class ChatComponentFormatted extends ChatComponentList {
@@ -103,19 +99,15 @@ public class ChatComponentFormatted extends ChatComponentList {
                 resetBuffer();
             }
             buffer.appendSibling(createComponent(parts, args));
-        } else if (parts.length == 1 && parts[0].equals("%s")){
+        } else if (parts.length == 1 && parts[0].equals("%s")) {
             addComponent(args);
         } else {
             throw new FormatException("Format " + componentString + " is not valid. Valid format: {modifiers|text}");
         }
     }
 
-
     /**
-     * Converts the modifiers String to a ChatStyle
-     * {modifiers|  some text}
-     *  ^^^^^^^^    ^^^^^^^^^
-     *  STYLE  for  THIS TEXT
+     * Converts the modifiers String to a ChatStyle {modifiers| some text} ^^^^^^^^ ^^^^^^^^^ STYLE for THIS TEXT
      */
     private ChatStyle getStyle(String modifiers) {
 
@@ -129,8 +121,7 @@ public class ChatComponentFormatted extends ChatComponentList {
     }
 
     /**
-     * Applies modifier to the style
-     * Returns whether or not the modifier was valid
+     * Applies modifier to the style Returns whether or not the modifier was valid
      */
     private boolean applyModifier(ChatStyle chatStyle, char modifier) {
         if (modifier >= '0' && modifier <= '9' || modifier >= 'a' && modifier <= 'f') {
@@ -138,18 +129,28 @@ public class ChatComponentFormatted extends ChatComponentList {
             return true;
         }
         switch (modifier) {
-            case 'k': chatStyle.setObfuscated(true); return true;
-            case 'l': chatStyle.setBold(true); return true;
-            case 'm': chatStyle.setStrikethrough(true); return true;
-            case 'n': chatStyle.setUnderlined(true); return true;
-            case 'o': chatStyle.setItalic(true); return true;
+            case 'k':
+                chatStyle.setObfuscated(true);
+                return true;
+            case 'l':
+                chatStyle.setBold(true);
+                return true;
+            case 'm':
+                chatStyle.setStrikethrough(true);
+                return true;
+            case 'n':
+                chatStyle.setUnderlined(true);
+                return true;
+            case 'o':
+                chatStyle.setItalic(true);
+                return true;
         }
         return false;
     }
 
     /**
-     * Adds a ChatComponentText between all of the siblings
-     * This can be used for easily displaying a onHoverText on multiple lines
+     * Adds a ChatComponentText between all of the siblings This can be used for easily displaying a onHoverText on
+     * multiple lines
      */
     public ChatComponentFormatted applyDelimiter(String delimiter) {
         List<IChatComponent> newSiblings = new ArrayList<IChatComponent>();
@@ -164,41 +165,34 @@ public class ChatComponentFormatted extends ChatComponentList {
     }
 
     /**
-     * Cut down version of the client-side only method for getting formatting code
-     * from the ChatStyle class
+     * Cut down version of the client-side only method for getting formatting code from the ChatStyle class
      *
      * Why is this client side?
      */
     private String getFormattingCodeForStyle(ChatStyle style) {
         StringBuilder stringbuilder = new StringBuilder();
 
-        if (style.getColor() != null)
-        {
+        if (style.getColor() != null) {
             stringbuilder.append(style.getColor());
         }
 
-        if (style.getBold())
-        {
+        if (style.getBold()) {
             stringbuilder.append(EnumChatFormatting.BOLD);
         }
 
-        if (style.getItalic())
-        {
+        if (style.getItalic()) {
             stringbuilder.append(EnumChatFormatting.ITALIC);
         }
 
-        if (style.getUnderlined())
-        {
+        if (style.getUnderlined()) {
             stringbuilder.append(EnumChatFormatting.UNDERLINE);
         }
 
-        if (style.getObfuscated())
-        {
+        if (style.getObfuscated()) {
             stringbuilder.append(EnumChatFormatting.OBFUSCATED);
         }
 
-        if (style.getStrikethrough())
-        {
+        if (style.getStrikethrough()) {
             stringbuilder.append(EnumChatFormatting.STRIKETHROUGH);
         }
 
@@ -207,10 +201,8 @@ public class ChatComponentFormatted extends ChatComponentList {
     }
 
     /**
-     * Gets the formatted String for this component.
-     * Example: {3|This is }{1|some text}
-     * Will convert into: \u00a73This is \u00a71some text
-     *                    \u00a7 - this is a unicode character used in Minecraft chat formatting
+     * Gets the formatted String for this component. Example: {3|This is }{1|some text} Will convert into: \u00a73This
+     * is \u00a71some text \u00a7 - this is a unicode character used in Minecraft chat formatting
      */
     public String[] getLegacyFormattedText() {
         String[] result = new String[this.siblings.size()];

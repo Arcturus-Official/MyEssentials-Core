@@ -1,15 +1,17 @@
 package myessentials.chat.api;
 
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 
 /**
  * Helper to build JSON IChatComponents
  */
 public class JsonMessageBuilder {
+
     private JsonMessageBuilder parentBuilder = null;
     private JsonObject rootObj;
 
@@ -141,8 +143,8 @@ public class JsonMessageBuilder {
     }
 
     /**
-     * Sets the clickEvent to the given action with the value
-     * Possible actions are open_url, run_command, and suggest_command
+     * Sets the clickEvent to the given action with the value Possible actions are open_url, run_command, and
+     * suggest_command
      */
     public JsonMessageBuilder setClickEvent(String action, String value) {
         JsonObject clickEventObj = new JsonObject();
@@ -174,8 +176,8 @@ public class JsonMessageBuilder {
     }
 
     /**
-     * Sets the hoverEvent to the given action with the value
-     * Possible actions are show_text, show_item, show_achievement, and show_entity
+     * Sets the hoverEvent to the given action with the value Possible actions are show_text, show_item,
+     * show_achievement, and show_entity
      */
     public JsonMessageBuilder setHoverEvent(String action, String value) {
         JsonObject hoverEventObj = new JsonObject();

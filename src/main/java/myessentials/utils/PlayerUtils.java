@@ -1,9 +1,11 @@
 package myessentials.utils;
 
-import com.mojang.authlib.GameProfile;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
-import myessentials.MyEssentialsCore;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
@@ -22,13 +24,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import com.mojang.authlib.GameProfile;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+import myessentials.MyEssentialsCore;
 
 /**
  * All utilities that are exclusively for EntityPlayerMP or EntityPlayer go here.
@@ -40,17 +43,19 @@ public class PlayerUtils {
     }
 
     /**
-     * Takes the amount of items specified.
-     * Returns false if player doesn't have the items necessary
+     * Takes the amount of items specified. Returns false if player doesn't have the items necessary
      */
     public static boolean takeItemFromPlayer(EntityPlayer player, String itemName, int amount) {
         String[] split = itemName.split(":");
-        return takeItemFromPlayer(player, GameRegistry.findItem(split[0], split[1]), amount, split.length == 3 ? Integer.parseInt(split[2]) : -1);
+        return takeItemFromPlayer(
+                player,
+                GameRegistry.findItem(split[0], split[1]),
+                amount,
+                split.length == 3 ? Integer.parseInt(split[2]) : -1);
     }
 
     /**
-     * Takes the amount of items specified.
-     * Returns false if player doesn't have the items necessary
+     * Takes the amount of items specified. Returns false if player doesn't have the items necessary
      */
     public static boolean takeItemFromPlayer(EntityPlayer player, Item item, int amount, int meta) {
         return takeItemFromPlayer(player, new ItemStack(item, 1, meta), amount);
@@ -64,31 +69,38 @@ public class PlayerUtils {
         int itemSum = 0;
         for (int i = 0; i < player.inventory.mainInventory.length; i++) {
             ItemStack invStack = player.inventory.mainInventory[i];
-            if (invStack == null)
-                continue;
-            if (invStack.getItem() == itemStack.getItem() && invStack.getDisplayName().equals(itemStack.getDisplayName()) && invStack.getItemDamage() == itemStack.getItemDamage()) {
+            if (invStack == null) continue;
+            if (invStack.getItem() == itemStack.getItem()
+                    && invStack.getDisplayName().equals(itemStack.getDisplayName())
+                    && invStack.getItemDamage() == itemStack.getItemDamage()) {
                 slots.add(i);
                 itemSum += invStack.stackSize;
-                if (itemSum >= amount)
-                    break;
+                if (itemSum >= amount) break;
             }
         }
 
-        if (itemSum < amount)
-            return false;
+        if (itemSum < amount) return false;
 
         for (int i : slots) {
             if (player.inventory.mainInventory[i].stackSize >= amount) {
                 player.inventory.decrStackSize(i, amount);
                 Slot slot = player.openContainer.getSlotFromInventory(player.inventory, i);
-                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slot.slotNumber, player.inventory.mainInventory[i]));
+                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(
+                        new S2FPacketSetSlot(
+                                player.openContainer.windowId,
+                                slot.slotNumber,
+                                player.inventory.mainInventory[i]));
                 return true;
             } else {
                 int stackSize = player.inventory.mainInventory[i].stackSize;
                 player.inventory.decrStackSize(i, stackSize);
                 amount -= stackSize;
                 Slot slot = player.openContainer.getSlotFromInventory(player.inventory, i);
-                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slot.slotNumber, player.inventory.mainInventory[i]));
+                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(
+                        new S2FPacketSetSlot(
+                                player.openContainer.windowId,
+                                slot.slotNumber,
+                                player.inventory.mainInventory[i]));
             }
         }
         return true;
@@ -99,7 +111,11 @@ public class PlayerUtils {
      */
     public static void giveItemToPlayer(EntityPlayer player, String itemName, int amount) {
         String[] split = itemName.split(":");
-        giveItemToPlayer(player, GameRegistry.findItem(split[0], split[1]), amount, split.length > 2 ? Integer.parseInt(split[2]) : 0);
+        giveItemToPlayer(
+                player,
+                GameRegistry.findItem(split[0], split[1]),
+                amount,
+                split.length > 2 ? Integer.parseInt(split[2]) : 0);
     }
 
     /**
@@ -157,12 +173,21 @@ public class PlayerUtils {
                     itemStack = new ItemStack(item, left, meta);
                     left = 0;
                 }
-                WorldUtils.dropAsEntity(player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ, itemStack);
+                WorldUtils.dropAsEntity(
+                        player.getEntityWorld(),
+                        (int) player.posX,
+                        (int) player.posY,
+                        (int) player.posZ,
+                        itemStack);
             } else {
                 // get the actual inventory Slot:
                 Slot slot = player.openContainer.getSlotFromInventory(player.inventory, i);
                 // send S2FPacketSetSlot to the player with the new / changed stack (or null)
-                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slot.slotNumber, player.inventory.mainInventory[i]));
+                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(
+                        new S2FPacketSetSlot(
+                                player.openContainer.windowId,
+                                slot.slotNumber,
+                                player.inventory.mainInventory[i]));
             }
         }
     }
@@ -183,9 +208,18 @@ public class PlayerUtils {
             // get the actual inventory Slot:
             Slot slot = player.openContainer.getSlotFromInventory(player.inventory, i);
             // send S2FPacketSetSlot to the player with the new / changed stack (or null)
-            ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slot.slotNumber, player.inventory.mainInventory[i]));
+            ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(
+                    new S2FPacketSetSlot(
+                            player.openContainer.windowId,
+                            slot.slotNumber,
+                            player.inventory.mainInventory[i]));
         } else {
-            WorldUtils.dropAsEntity(player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ, itemStack);
+            WorldUtils.dropAsEntity(
+                    player.getEntityWorld(),
+                    (int) player.posX,
+                    (int) player.posY,
+                    (int) player.posZ,
+                    itemStack);
         }
     }
 
@@ -203,9 +237,8 @@ public class PlayerUtils {
     }
 
     /**
-     * Teleports a player to (x, y, z) in dimension dim without creating any nether portals of sorts.
-     * Also preserves motion and potion effects even on cross dimensional teleports.
-     * Only the player teleports, leaving mounts behind.
+     * Teleports a player to (x, y, z) in dimension dim without creating any nether portals of sorts. Also preserves
+     * motion and potion effects even on cross dimensional teleports. Only the player teleports, leaving mounts behind.
      * <p/>
      * The base of the Teleport code came from CoFHLib teleport code:
      * https://github.com/CoFH/CoFHLib/blob/master/src/main/java/cofh/lib/util/helpers/EntityHelper.java
@@ -234,13 +267,19 @@ public class PlayerUtils {
         WorldServer newWorldServer = configManager.getServerInstance().worldServerForDimension(dim);
 
         player.dimension = dim;
-        player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, player.worldObj.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
+        player.playerNetServerHandler.sendPacket(
+                new S07PacketRespawn(
+                        player.dimension,
+                        player.worldObj.difficultySetting,
+                        player.worldObj.getWorldInfo().getTerrainType(),
+                        player.theItemInWorldManager.getGameType()));
         oldWorldServer.removePlayerEntityDangerously(player);
         player.isDead = false;
 
         transferPlayerToWorld(player, oldWorldServer, newWorldServer);
         configManager.func_72375_a(player, oldWorldServer);
-        player.playerNetServerHandler.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+        player.playerNetServerHandler
+                .setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
         player.theItemInWorldManager.setWorld(newWorldServer);
         configManager.updateTimeAndWeatherForPlayer(player, newWorldServer);
         configManager.syncPlayerInventory(player);
@@ -267,7 +306,6 @@ public class PlayerUtils {
         player.setWorld(newWorld);
     }
 
-
     public static boolean isOp(EntityPlayer player) {
         if (player.getGameProfile() == null) {
             return false;
@@ -278,7 +316,7 @@ public class PlayerUtils {
 
     public static boolean isOp(UUID uuid) {
         GameProfile gameProfile = MinecraftServer.getServer().func_152358_ax().func_152652_a(uuid);
-        if(gameProfile == null) {
+        if (gameProfile == null) {
             return false;
         }
 
@@ -303,16 +341,19 @@ public class PlayerUtils {
         return false;
     }
 
-
     /**
      * Gets the position at which the player is looking
      */
-    public static MovingObjectPosition getMovingObjectPositionFromPlayer(World p_77621_1_, EntityPlayer p_77621_2_, boolean p_77621_3_) {
+    public static MovingObjectPosition getMovingObjectPositionFromPlayer(World p_77621_1_, EntityPlayer p_77621_2_,
+            boolean p_77621_3_) {
         float f = 1.0F;
         float f1 = p_77621_2_.prevRotationPitch + (p_77621_2_.rotationPitch - p_77621_2_.prevRotationPitch) * f;
         float f2 = p_77621_2_.prevRotationYaw + (p_77621_2_.rotationYaw - p_77621_2_.prevRotationYaw) * f;
         double d0 = p_77621_2_.prevPosX + (p_77621_2_.posX - p_77621_2_.prevPosX) * (double) f;
-        double d1 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double) f + (double) (p_77621_1_.isRemote ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight() : p_77621_2_.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
+        double d1 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double) f
+                + (double) (p_77621_1_.isRemote ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight()
+                        : p_77621_2_.getEyeHeight()); // isRemote check to revert changes to ray trace position due to
+                                                      // adding the eye height clientside and player yOffset differences
         double d2 = p_77621_2_.prevPosZ + (p_77621_2_.posZ - p_77621_2_.prevPosZ) * (double) f;
         Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
@@ -329,11 +370,11 @@ public class PlayerUtils {
         return p_77621_1_.func_147447_a(vec3, vec31, p_77621_3_, !p_77621_3_, false);
     }
 
-
     @SuppressWarnings("unchecked")
     public static EntityPlayer getPlayerFromUUID(UUID uuid) {
-        for(EntityPlayer player : (List<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-            if(player.getGameProfile().getId().equals(uuid)) {
+        for (EntityPlayer player : (List<EntityPlayer>) MinecraftServer.getServer()
+                .getConfigurationManager().playerEntityList) {
+            if (player.getGameProfile().getId().equals(uuid)) {
                 return player;
             }
         }

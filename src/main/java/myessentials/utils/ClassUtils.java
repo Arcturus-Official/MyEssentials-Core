@@ -1,18 +1,17 @@
 package myessentials.utils;
 
-import net.minecraft.server.MinecraftServer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.minecraft.server.MinecraftServer;
 
 /**
  * All utilities exclusively for classes go here
  */
 public class ClassUtils {
 
-    private ClassUtils() {
-    }
+    private ClassUtils() {}
 
     /**
      * Searches for the class using the path. Example: "net.minecraft.block.Block"
@@ -28,7 +27,8 @@ public class ClassUtils {
     }
 
     public static boolean isBukkitLoaded() {
-        return MinecraftServer.getServer().getServerModName().contains("cauldron") || MinecraftServer.getServer().getServerModName().contains("mcpc");
+        return MinecraftServer.getServer().getServerModName().contains("cauldron")
+                || MinecraftServer.getServer().getServerModName().contains("mcpc");
     }
 
     public static List<Class<?>> getAllInterfaces(Class<?> cls) {

@@ -1,14 +1,9 @@
 package myessentials.chat.api;
 
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.IChatComponent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * A multi-page IChatComponent container.
- * Used for sending large amount of lines to a player.
+ * A multi-page IChatComponent container. Used for sending large amount of lines to a player.
  */
 public class ChatComponentMultiPage extends ChatComponentContainer {
 
@@ -32,11 +27,14 @@ public class ChatComponentMultiPage extends ChatComponentContainer {
 
     public ChatComponentContainer getPage(int page) {
         ChatComponentContainer result = new ChatComponentContainer();
-        result.addAll(this.subList(maxComponentsPerPage * (page - 1), maxComponentsPerPage * page > size() ? size() : maxComponentsPerPage * page));
+        result.addAll(
+                this.subList(
+                        maxComponentsPerPage * (page - 1),
+                        maxComponentsPerPage * page > size() ? size() : maxComponentsPerPage * page));
         return result;
     }
 
     public int getNumberOfPages() {
-        return (int) Math.ceil((float)size() / (float)maxComponentsPerPage);
+        return (int) Math.ceil((float) size() / (float) maxComponentsPerPage);
     }
 }

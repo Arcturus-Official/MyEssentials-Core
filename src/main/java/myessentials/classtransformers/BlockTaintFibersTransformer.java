@@ -1,14 +1,17 @@
 package myessentials.classtransformers;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraft.world.World;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.GeneratorAdapter;
 
 /**
- * Patches BlockTaintFibers to add a hook for the {@link myessentials.event.ModifyBlockEvent}.
- * <br/>
+ * Patches BlockTaintFibers to add a hook for the {@link myessentials.event.ModifyBlockEvent}. <br/>
  *
  */
 public class BlockTaintFibersTransformer implements IClassTransformer {
@@ -22,7 +25,7 @@ public class BlockTaintFibersTransformer implements IClassTransformer {
         @Override
         public void visitJumpInsn(int opcode, Label label) {
             super.visitJumpInsn(opcode, label);
-            if(opcode == Opcodes.IF_ICMPLT) {
+            if (opcode == Opcodes.IF_ICMPLT) {
                 super.visitVarInsn(Opcodes.ALOAD, 0);
                 super.visitVarInsn(Opcodes.ILOAD, 1);
                 super.visitVarInsn(Opcodes.ILOAD, 6);
@@ -30,7 +33,12 @@ public class BlockTaintFibersTransformer implements IClassTransformer {
                 super.visitVarInsn(Opcodes.ILOAD, 3);
                 super.visitVarInsn(Opcodes.ILOAD, 7);
                 super.visitInsn(Opcodes.IADD);
-                super.visitMethodInsn(Opcodes.INVOKESTATIC, "myessentials/event/ModifyBiomeEvent", "checkBiome", "(Lnet/minecraft/world/World;II)Z", false);
+                super.visitMethodInsn(
+                        Opcodes.INVOKESTATIC,
+                        "myessentials/event/ModifyBiomeEvent",
+                        "checkBiome",
+                        "(Lnet/minecraft/world/World;II)Z",
+                        false);
 
                 Label elseLabel = new Label();
                 super.visitJumpInsn(Opcodes.IFEQ, elseLabel);
@@ -42,16 +50,18 @@ public class BlockTaintFibersTransformer implements IClassTransformer {
 
     @Override
     public byte[] transform(String name, String srgName, byte[] bytes) {
-        if("thaumcraft.common.blocks.BlockTaintFibres".equals(srgName)) {
+        if ("thaumcraft.common.blocks.BlockTaintFibres".equals(srgName)) {
             ClassReader reader = new ClassReader(bytes);
             ClassWriter writer = new ClassWriter(reader, Opcodes.ASM4);
 
             ClassVisitor visitor = new ClassVisitor(Opcodes.ASM4, writer) {
+
                 @Override
-                public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+                public MethodVisitor visitMethod(int access, String name, String desc, String signature,
+                        String[] exceptions) {
                     MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
-                    if("taintBiomeSpread".equals(name)) {
+                    if ("taintBiomeSpread".equals(name)) {
                         return new BlockTaintFibersGeneratorAdapter(methodVisitor, access, name, desc);
                     }
 

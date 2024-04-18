@@ -1,8 +1,9 @@
 package myessentials.utils;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * All utilities that are exclusively for Items and ItemStacks go here.
@@ -40,8 +41,7 @@ public class ItemUtils {
      */
     public static String nameFromItemStack(ItemStack itemStack) {
         String name = GameRegistry.findUniqueIdentifierFor(itemStack.getItem()).toString();
-        if(itemStack.getItemDamage() != 0)
-            name += ":" + itemStack.getItemDamage();
+        if (itemStack.getItemDamage() != 0) name += ":" + itemStack.getItemDamage();
         return name;
     }
 }

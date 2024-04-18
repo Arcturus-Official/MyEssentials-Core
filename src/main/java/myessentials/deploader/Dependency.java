@@ -3,6 +3,7 @@ package myessentials.deploader;
 import cpw.mods.fml.common.versioning.ComparableVersion;
 
 public class Dependency {
+
     private String url;
     private VersionedFile file;
     private boolean coreLib;

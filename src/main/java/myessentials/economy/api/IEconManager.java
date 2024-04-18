@@ -1,9 +1,9 @@
 package myessentials.economy.api;
 
-import net.minecraft.entity.player.EntityPlayer;
-
 import java.util.Map;
 import java.util.UUID;
+
+import net.minecraft.entity.player.EntityPlayer;
 
 public interface IEconManager {
 
@@ -20,8 +20,7 @@ public interface IEconManager {
     int getWallet();
 
     /**
-     * Remove a set amount from a target's Wallet
-     * returns true if it succeded, false if it didn't
+     * Remove a set amount from a target's Wallet returns true if it succeded, false if it didn't
      */
     boolean removeFromWallet(int amountToSubtract);
 
@@ -39,10 +38,9 @@ public interface IEconManager {
      * Gets a combo of getWallet + currency
      */
     String getMoneyString();
-    
+
     /**
-     * Saves all wallets to disk
-     * (for users still on the server when it's stopping)
+     * Saves all wallets to disk (for users still on the server when it's stopping)
      */
     void save();
 

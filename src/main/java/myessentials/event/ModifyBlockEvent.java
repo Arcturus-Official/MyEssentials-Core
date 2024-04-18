@@ -1,18 +1,18 @@
 package myessentials.event;
 
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
-import net.minecraft.block.Block;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraft.world.World;
 
 /**
- * Fired when a block is about to be modified.
- * If the event is canceled the block is not modified.
+ * Fired when a block is about to be modified. If the event is canceled the block is not modified.
  */
 @Cancelable
-public class ModifyBlockEvent extends Event 
-{
+public class ModifyBlockEvent extends Event {
+
     public final int x;
     public final int y;
     public final int z;

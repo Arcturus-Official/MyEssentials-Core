@@ -3,6 +3,7 @@ package myessentials.curse;
 import java.util.Map;
 
 public class CurseModInfo {
+
     private String title;
     private String game;
     private String category;

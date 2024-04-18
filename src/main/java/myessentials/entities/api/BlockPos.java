@@ -1,13 +1,15 @@
 package myessentials.entities.api;
 
+import net.minecraft.util.IChatComponent;
+
 import myessentials.MyEssentialsCore;
 import myessentials.chat.api.IChatFormat;
-import net.minecraft.util.IChatComponent;
 
 /**
  * Helper class for storing position of a block
  */
 public class BlockPos implements IChatFormat {
+
     private final int dim;
     private final int x;
     private final int y;
@@ -43,7 +45,7 @@ public class BlockPos implements IChatFormat {
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof BlockPos) {
+        if (other instanceof BlockPos) {
             BlockPos otherBP = (BlockPos) other;
             return otherBP.dim == dim && otherBP.x == x && otherBP.y == y && otherBP.z == z;
         }
@@ -55,4 +57,3 @@ public class BlockPos implements IChatFormat {
         return MyEssentialsCore.instance.LOCAL.getLocalization("myessentials.format.blockpos", x, y, z, dim);
     }
 }
-

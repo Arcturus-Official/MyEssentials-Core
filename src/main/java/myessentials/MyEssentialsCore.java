@@ -1,5 +1,9 @@
 package myessentials;
 
+import net.minecraftforge.common.MinecraftForge;
+
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -9,11 +13,15 @@ import myessentials.entities.api.sign.SignManager;
 import myessentials.entities.api.tool.ToolManager;
 import myessentials.localization.api.Local;
 import myessentials.localization.api.LocalManager;
-import net.minecraftforge.common.MinecraftForge;
-import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "MyEssentials-Core", name = "MyEssentials-Core", version = "GRADLETOKEN_VERSION", dependencies = "required-after:Forge", acceptableRemoteVersions = "*")
+@Mod(
+        modid = "MyEssentials-Core",
+        name = "MyEssentials-Core",
+        version = "GRADLETOKEN_VERSION",
+        dependencies = "required-after:Forge",
+        acceptableRemoteVersions = "*")
 public class MyEssentialsCore {
+
     @Instance("MyEssentials-Core")
     public static MyEssentialsCore instance;
 
@@ -29,7 +37,11 @@ public class MyEssentialsCore {
         // Load Configs
         Config.instance.init(Constants.CONFIG_FOLDER + "/Core.cfg", "MyEssentials-Core");
         // REF: The localization can simply take the whole config instance to get the localization needed.
-        LOCAL = new Local(Constants.CONFIG_FOLDER + "/localization/", Config.instance.localization.get(), "/myessentials/localization/", MyEssentialsCore.class);
+        LOCAL = new Local(
+                Constants.CONFIG_FOLDER + "/localization/",
+                Config.instance.localization.get(),
+                "/myessentials/localization/",
+                MyEssentialsCore.class);
         LocalManager.register(LOCAL, "myessentials");
 
         // Register handlers/trackers

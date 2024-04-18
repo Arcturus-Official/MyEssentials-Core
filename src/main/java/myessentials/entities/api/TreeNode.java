@@ -25,7 +25,6 @@ public class TreeNode<T extends TreeNode> {
         child.parent = this;
     }
 
-
     public List<T> getChildren() {
         return children;
     }

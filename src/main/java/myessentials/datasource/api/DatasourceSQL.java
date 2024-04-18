@@ -1,22 +1,27 @@
 package myessentials.datasource.api;
 
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.logging.log4j.Logger;
+
 import myessentials.MyEssentialsCore;
 import myessentials.config.api.ConfigProperty;
 import myessentials.config.api.ConfigTemplate;
 import myessentials.datasource.api.bridge.BridgeMySQL;
 import myessentials.datasource.api.bridge.BridgeSQL;
 import myessentials.datasource.api.bridge.BridgeSQLite;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Datasource class which contains most functionality needed for a database connection.
- * Database connection initialization is done on instantiation.
- * Extend this and add all the load/save methods you want right in the extended class.
+ * Datasource class which contains most functionality needed for a database connection. Database connection
+ * initialization is done on instantiation. Extend this and add all the load/save methods you want right in the extended
+ * class.
  */
 public abstract class DatasourceSQL {
 
@@ -27,7 +32,8 @@ public abstract class DatasourceSQL {
     protected Schema schema;
 
     public ConfigProperty<String> databaseType = new ConfigProperty<String>(
-            "type", "datasource",
+            "type",
+            "datasource",
             "Specifies the database engine that is being used.",
             "SQLite");
 
@@ -84,7 +90,9 @@ public abstract class DatasourceSQL {
 
     protected PreparedStatement prepare(String sql, boolean returnGenerationKeys) {
         try {
-            return bridge.getConnection().prepareStatement(sql, returnGenerationKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+            return bridge.getConnection().prepareStatement(
+                    sql,
+                    returnGenerationKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
         } catch (SQLException e) {
             LOG.fatal(sql);
             LOG.error(ExceptionUtils.getStackTrace(e));
@@ -95,7 +103,7 @@ public abstract class DatasourceSQL {
     protected void doUpdates() throws SQLException {
         List<String> ids = new ArrayList<String>();
         PreparedStatement statement;
-        if(hasTable("Updates")) {
+        if (hasTable("Updates")) {
             statement = prepare("SELECT id FROM " + prefix + "Updates", false);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

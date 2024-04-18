@@ -5,8 +5,8 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 
 /**
- * Used for teleporting a player to another dimension
- * Most of it is code from Delpi (from minecraftforge forums). Thank you!
+ * Used for teleporting a player to another dimension Most of it is code from Delpi (from minecraftforge forums). Thank
+ * you!
  */
 public class EssentialsTeleporter extends Teleporter {
 
@@ -16,20 +16,17 @@ public class EssentialsTeleporter extends Teleporter {
 
     // Override Default BS
     @Override
-    public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
-    {
+    public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8) {
         return false;
     }
 
     @Override
-    public void removeStalePortalLocations(long par1)
-    {
+    public void removeStalePortalLocations(long par1) {
         // Doesn't need to create a portal
     }
 
     @Override
-    public void placeInPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
-    {
+    public void placeInPortal(Entity par1Entity, double par2, double par4, double par6, float par8) {
         // Doesn't need to create a portal
     }
 

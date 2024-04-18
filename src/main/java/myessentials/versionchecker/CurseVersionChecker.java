@@ -1,14 +1,15 @@
 package myessentials.versionchecker;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import cpw.mods.fml.common.Loader;
 import myessentials.curse.Curse;
 import myessentials.curse.CurseModInfo;
 import myessentials.curse.VersionInfo;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class CurseVersionChecker implements Runnable {
+
     private String projectid;
     private double currentVersion;
     private Pattern versionRegex;
@@ -33,10 +34,9 @@ public class CurseVersionChecker implements Runnable {
                 VersionInfo newest = modInfo.getNewestVersion(Loader.MC_VERSION);
                 Matcher matcher = versionRegex.matcher(newest.getName());
                 String versionString = matcher.group(2);
-                if (stringToVersion(versionString) > this.currentVersion) {
-                }
+                if (stringToVersion(versionString) > this.currentVersion) {}
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             // TODO Handle safely
         }
     }

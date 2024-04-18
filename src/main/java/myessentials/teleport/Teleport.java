@@ -3,12 +3,12 @@ package myessentials.teleport;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.DimensionManager;
 
 /**
  * Retains the needed information for the action of teleporting a player to a certain position.
  */
 public class Teleport {
+
     private int dim;
     private float x, y, z, yaw, pitch;
 
@@ -22,12 +22,15 @@ public class Teleport {
         this(dim, x, y, z, 0, 0);
     }
 
-    //Used when a player is riding an entity. eg pig, horse
-    public void teleport(EntityPlayer pl, boolean canRide){
+    // Used when a player is riding an entity. eg pig, horse
+    public void teleport(EntityPlayer pl, boolean canRide) {
         if (pl.dimension != dim) {
-            MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension((EntityPlayerMP)pl, dim, new EssentialsTeleporter(MinecraftServer.getServer().worldServerForDimension(dim)));
+            MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(
+                    (EntityPlayerMP) pl,
+                    dim,
+                    new EssentialsTeleporter(MinecraftServer.getServer().worldServerForDimension(dim)));
         }
-        if(pl.isRiding() && pl.ridingEntity != null  && pl.ridingEntity.isEntityAlive() && canRide) {
+        if (pl.isRiding() && pl.ridingEntity != null && pl.ridingEntity.isEntityAlive() && canRide) {
             pl.ridingEntity.setPosition(x, y, z);
             pl.ridingEntity.setPositionAndRotation(x, y, z, yaw, pitch);
         }

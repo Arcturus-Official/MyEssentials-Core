@@ -1,33 +1,39 @@
 package myessentials.datasource.api.bridge;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import com.mysql.jdbc.Driver;
+
 import myessentials.MyEssentialsCore;
 import myessentials.config.api.ConfigProperty;
 import myessentials.config.api.ConfigTemplate;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class BridgeMySQL extends BridgeSQL {
 
     public ConfigProperty<String> username = new ConfigProperty<String>(
-            "username", "datasource",
+            "username",
+            "datasource",
             "Username to use when connecting",
             "");
 
     public ConfigProperty<String> password = new ConfigProperty<String>(
-            "password", "datasource",
+            "password",
+            "datasource",
             "Password to use when connecting",
             "");
 
     public ConfigProperty<String> host = new ConfigProperty<String>(
-            "host", "datasource",
+            "host",
+            "datasource",
             "Hostname (format: 'host:port') to use when connecting",
             "localhost");
 
     public ConfigProperty<String> database = new ConfigProperty<String>(
-            "database", "datasource",
+            "database",
+            "datasource",
             "The database name",
             "mytown");
 
